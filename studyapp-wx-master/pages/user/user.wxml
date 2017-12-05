@@ -1,0 +1,35 @@
+<view class="container user" wx:if="{{showUser}}">
+
+  <view class="user-header">
+    <image src="{{userInfo.avatarUrl}}" class="user-avatar"></image>
+    <view class="user-name">{{userInfo.nickName}}</view>
+  </view>
+  <view class="user-body">
+    <view class="user-box">
+      <image class="user-box-img" src="{{domain}}/wximg/icon_my_topics.png"></image>
+      <view class="user-box-name" bindtap="bindMyTopics">发布的话题</view>
+      <view class="user-box-num" hidden>10</view>
+    </view>
+    <view class="user-box">
+      <image class="user-box-img" src="{{domain}}/wximg/icon_join_topic.png"></image>
+      <view class="user-box-name" bindtap="bindMyReplies">参与的话题</view>
+      <view class="user-box-num" hidden>10</view>
+    </view>
+    <view class="user-box">
+      <image class="user-box-img" src="{{domain}}/wximg/icon_message.png"></image>
+      <view class="user-box-name" bindtap="bindMyMsg">站内信箱</view>
+      <view class="user-box-num" hidden>10</view>
+    </view>
+    <view class="user-box">
+      <image class="user-box-img" src="{{domain}}/wximg/icon_transfer.png"></image>
+      <view class="user-box-name" bindtap="bindMyStorage">清除缓存</view>
+      <view class="user-box-num">{{storageSize}}/{{storageLimitSize}}M</view>
+    </view>
+
+  </view>
+
+</view>
+
+
+
+
