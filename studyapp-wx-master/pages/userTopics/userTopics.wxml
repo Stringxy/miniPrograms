@@ -2,8 +2,8 @@
 
   <scroll-view scroll-y="true" bindscrolltolower="bindScrollToLower" class="topics">
     <block wx:for="{{topics}}" wx:key="_id">
-      <view class="topics-item" bindtap="bindTopicTap" data-id="{{item._id}}">
-        <image class="topics-avatar" src="{{userInfo.avatarUrl}}"></image>
+      <view class="topics-item" bindtap="bindTopicTap" data-id="{{item.id}}">
+        <image class="topics-avatar" src="{{item.avatar}}"></image>
         <view class="topics-title" url="../topic/topic?id={{item.id}}">{{item.title}}</view>
         <view class="topics-reply">{{item.comments}}/{{item.views}}</view>
       </view>

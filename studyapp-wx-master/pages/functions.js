@@ -76,19 +76,28 @@ var funcs = {
     //发布、参与的话题
     getTopicsByUserId: function (openId, page, etype){
         var that = this;
-        var page = page || 1;
+        var page = page || 0;
+        var data={
+          pageNo:page,
+          pageSize:10,
+          openid:openId
+        };
         wx.request({
-            url: hostName+'/api/v1/'+etype+'/'+openId+"?page="+page,
+          url: hostName +'/weixin/userTopic',
+          method:'post',
+          data:data,
             success: function(res) {
-                if(!res.data.success){
+              
+                if(!res.data.result==200){
                     return funcs.reLogin(res.data.msg);
                 }
-                if(res.data.topics.length<=0){
+                if(res.data.detail.length<=0){
                     return;
                 }
+                console.info('resresr', res);
                 that.setData({
-                    topics: that.data.topics.concat(res.data.topics),
-                    page: res.data.page
+                  topics: res.data.detail,
+                  page: page
                 })
             },
             fail: function(err) {

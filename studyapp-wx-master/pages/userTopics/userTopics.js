@@ -29,6 +29,7 @@ Page({
   },
   //点击进入话题详情
   bindTopicTap: function(e) {
+    console.info('eeeeeeee',e)
     var data = e.currentTarget.dataset;
     wx.navigateTo({
       url: '../topic/topic?id='+data.id
@@ -50,12 +51,9 @@ Page({
     });
 
     //默认加载第一页
-    wx.getStorage({
-        key: 'userInfo',
-        success: function(res) {
-            func.getTopicsByUserId.call(that, res.data.openId, 1, options.etype);
-        } 
-    })
+    var userInfo = wx.getStorageSync('userInfo');
+    //console.info('userInfouserInfouserInfo', userInfo)
+    func.getTopicsByUserId.call(that, userInfo.openid, 0, options.etype);
 
     //标题
     if(this.data.etype == "getWxUserReplies"){

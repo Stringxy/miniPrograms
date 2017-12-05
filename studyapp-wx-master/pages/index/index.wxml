@@ -8,8 +8,8 @@
   </scroll-view>
 
 
-  <scroll-view scroll-y="true" bindscrolltolower="bindScrollToLower" bindscrolltoupper="bindScrollToUpper" class="topics">
-    <block wx:for="{{topics}}" wx:key="_id">
+  <scroll-view scroll-y="true" style="height: {{windowHeight}}px; width: {{windowWidth}}px;" bindscrolltolower="bindScrollToLower" bindscrolltoupper="bindScrollToUpper" class="topics">
+    <block wx:for="{{topics}}" wx:key="id">
       <view class="topics-item" bindtap="bindTopicTap" data-id="{{item.id}}">
         <image class="topics-avatar" src="{{item.avatar}}"></image>
         <view class="topics-title" url="../topic/topic?id={{item.id}}">{{item.title}}</view>

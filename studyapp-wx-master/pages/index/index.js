@@ -45,31 +45,44 @@ Page({
   },
   //滚动加载列表
   bindScrollToLower: function(){
-    if(this.data.page.cur < this.data.page.total){
-      wx.showToast({
-        title: '正在加载',
-        icon: 'loading'
-      });
-      var cate;
-      for(var i = 0; i < this.data.cates.length; i++){
-        if(this.data.cates[i].selected == true){
-          cate = this.data.cates[i];
-        }
-      }
+     console.info("bindScrollToLower")
+    // if(this.data.page < 3){
+    //   wx.showToast({
+    //     title: '正在加载',
+    //     icon: 'loading'
+    //   });
+    //   var cate;
+    //   for(var i = 0; i < this.data.cates.length; i++){
+    //     if(this.data.cates[i].selected == true){
+    //       cate = this.data.cates[i];
+    //     }
+    //   }
       
-      func.getTopics.call(this, cate.id, this.data.page.cur+1);
-    }else{
-      this.setData({
-        hasMore: false
-      })
-    }
+    //    func.getTopics.call(this, cate.id, this.data.page+1);
+    // }else{
+    //   this.setData({
+    //     hasMore: false
+    //   })
+    // }
     
   },
   bindScrollToUpper: function(){
-    
+    wx.showToast({
+      title: '正在刷新',
+      icon: 'loading'
+    });
+    func.getTopics.call(this, 1);
   },
   onLoad: function () {
     var that = this
+    wx.getSystemInfo({
+      success: function (res) {
+        that.setData({
+          windowHeight: res.windowHeight,
+          windowWidth: res.windowWidth
+        })
+      }
+    });  
     //调用应用实例的方法获取全局数据
     app.getUserInfo(function(userInfo){
       //更新数据
@@ -80,5 +93,12 @@ Page({
     //默认加载全部
     func.getTopics.call(this, 1);
     console.info('data',that.data)
+  },
+  onShareAppMessage: function () {
+    return {
+      title: '微信小程序联盟',
+      desc: '最具人气的小程序开发联盟!',
+      path: 'pages/index/index'
+    }
   }
 })
