@@ -63,3 +63,11 @@
   margin-left: 5px;
   margin-top: 7px;
 }
+.addButton{
+  height: 100rpx;  
+  width: 100rpx;  
+  position: fixed;  
+  bottom: 250rpx;  
+  right: 30rpx;  
+  opacity: 0.7
+}

@@ -5,7 +5,8 @@
     "pages/create/create",
     "pages/user/user",
     "pages/userTopics/userTopics",
-    "pages/userMsg/userMsg"
+    "pages/userMsg/userMsg",
+    "pages/begin/begin"
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -21,8 +22,8 @@
       "iconPath": "images/icon_tabBar_home.png",
       "selectedIconPath": "images/icon_tabBar_home_selected.png"
     }, {
-      "pagePath": "pages/create/create",
-      "text": "话题",
+      "pagePath": "pages/begin/begin",
+      "text": "测试",
       "iconPath": "images/icon_tabBar_write.png",
       "selectedIconPath": "images/icon_tabBar_write_selected.png"
     }, {

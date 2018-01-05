@@ -18,5 +18,6 @@
     </block>
     <view class="tip" style="text-align:center" wx:if="{{!hasMore}}">全部已加载完</view>
   </scroll-view>
+  <image class="addButton" src="/images/add.png" bindtap='bindAddButton'></image>
 
 </view>

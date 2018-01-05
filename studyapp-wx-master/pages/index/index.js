@@ -43,6 +43,13 @@ Page({
       url: '../topic/topic?id='+data.id
     })
   },
+  //点击进入发布话题
+  bindAddButton: function () {
+    console.info('addddddd')
+    wx.redirectTo({
+      url: '../create/create',
+    })
+  },
   //滚动加载列表
   bindScrollToLower: function(){
      console.info("bindScrollToLower")
