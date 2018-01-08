@@ -34,10 +34,10 @@ Page({
       email: e.detail.value
     })
   },
-  //发布的话题
-  bindMyTopics: function () {
+  //开始软件设计师答题
+  bindSoftwareDesignEngineer: function () {
     wx.navigateTo({
-      url: '../userTopics/userTopics?userId=' + wx.getStorageSync('userInfo')._id + "&etype=getWxUserTopics"
+      url: '../question/question'
     })
   },
   //参与的话题

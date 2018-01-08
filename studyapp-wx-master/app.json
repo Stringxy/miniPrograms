@@ -6,7 +6,8 @@
     "pages/user/user",
     "pages/userTopics/userTopics",
     "pages/userMsg/userMsg",
-    "pages/begin/begin"
+    "pages/begin/begin",
+    "pages/question/question"
   ],
   "window":{
     "backgroundTextStyle":"light",

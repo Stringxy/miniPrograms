@@ -7,7 +7,7 @@
   <view class="user-body">
     <view class="user-box">
       <image class="user-box-img" src="/images/user.png"></image>
-      <view class="user-box-name" bindtap="bindMyTopics">软件设计师真题测试</view>
+      <view class="user-box-name" bindtap="bindSoftwareDesignEngineer">软件设计师真题测试</view>
       <view class="user-box-num" hidden>10</view>
     </view>
 
