@@ -74,11 +74,38 @@ Page({
       }
     })
   },
+  onShow: function () {
+    //是否登陆
+    if (!wx.getStorageSync('isLogin')) {
+      wx.showModal({
+        title: "请登陆",
+        content: "您还没有登陆，请登陆后发布话题",
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+            wx.navigateTo({
+              url: '../reg/reg'
+            })
+          }
+        }
+      })
+    }
+  },
   onLoad: function (options) {
     var that = this;
 
-    //console.log(wx.getStorageSync('isLogin'))
+    console.log(wx.getStorageSync('isLogin'))
 
+    //是否登陆过？
+    if (wx.getStorageSync('isLogin') == "true") {
+      that.setData({
+        showUser: true
+      })
+    } else {
+      that.setData({
+        showLogin: true
+      })
+    }
 
       that.setData({
         showUser: true

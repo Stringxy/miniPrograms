@@ -8,17 +8,16 @@ var funcs = {
     //按分类拉取话题列表
     getTopics: function (cate, page){
         var that = this;
-        var page = page || 0;
-        var para={
-          pageNo: page,
-          pageSize:10,
-          cate:cate
-        }; 
+        var page = page || 1;
+        // var para={
+        //   pageNo: page,
+        //   pageSize:10,
+        //   cate:cate
+        // }; 
       
         wx.request({
-          url: hostName +'/weixin/findAll',
-          data: para,
-          method: 'POST',
+          url: hostName +'/topic/getAll/'+cate+'/'+page+'/'+10,
+          method: 'GET',
           success: function(res) {
                 that.setData({
                     topics: res.data.result==200 ? res.data.detail : that.data.topics.concat(res.data.topics),
@@ -36,7 +35,7 @@ var funcs = {
     getTopic: function (id){
         var that = this;
         wx.request({
-          url: hostName +'/weixin/findById/'+id,
+          url: hostName +'/topic/get/'+id,
             success: function(res) {
                 var data = res.data.detail;
                 console.info('topic',data)
@@ -83,7 +82,7 @@ var funcs = {
           openid:openId
         };
         wx.request({
-          url: hostName +'/weixin/userTopic',
+          url: hostName +'/topic/add',
           method:'post',
           data:data,
             success: function(res) {

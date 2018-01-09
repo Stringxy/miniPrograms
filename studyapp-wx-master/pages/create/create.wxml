@@ -7,6 +7,7 @@
     </picker>
     <input type="text" value="" placeholder="请输入标题" class="form-input" bindblur="bindTitleBlur" />
     <textarea value="" class="form-textarea" placeholder="请输入内容" bindinput="bindContentBlur" maxlength="0" />
+   <image class="update-img" catchtap="chooseImageTap" src="{{logo}}"></image>
     <button type="primary" class="form-input" bindtap="bindPushTap">发布</button>
   </view>
 </view>

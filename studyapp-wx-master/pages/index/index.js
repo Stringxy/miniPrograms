@@ -90,6 +90,10 @@ Page({
         })
       }
     });  
+    wx.showLoading({
+      title: '读取中 ...',
+      mask: true
+    });
     //调用应用实例的方法获取全局数据
     app.getUserInfo(function(userInfo){
       //更新数据
@@ -99,13 +103,7 @@ Page({
     })
     //默认加载全部
     func.getTopics.call(this, 1);
+    wx.hideLoading()
     console.info('data',that.data)
-  },
-  onShareAppMessage: function () {
-    return {
-      title: '微信小程序联盟',
-      desc: '最具人气的小程序开发联盟!',
-      path: 'pages/index/index'
-    }
   }
 })

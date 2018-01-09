@@ -7,7 +7,9 @@
     "pages/userTopics/userTopics",
     "pages/userMsg/userMsg",
     "pages/begin/begin",
-    "pages/question/question"
+    "pages/question/question",
+    "pages/result/result",
+    "pages/reg/reg"
   ],
   "window":{
     "backgroundTextStyle":"light",

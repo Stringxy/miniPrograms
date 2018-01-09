@@ -7,8 +7,8 @@ Page({
     index: 0,
     userInfo: {},
     title: '',
-    content: ''
-
+    content: '',
+    logo: '../../images/picture_add.png'
   },
   //栏目
   bindCateChange: function (e) {
@@ -42,14 +42,14 @@ Page({
     //console.info("发布发布发布", that.data)
     //"\n发自学霸联盟微信小程序V0.6"
     wx.request({
-      url: app.globalData.domain + '/weixin/addNote',
+      url: app.globalData.domain + '/topic/add',
       data:
       {
         title: that.data.title,
         content: content,
         cate: that.data.cate,
         openid: userInfo.openid,
-        nickName: userInfo.nickName,
+        nick_name: userInfo.nickName,
         avatar: userInfo.avatarUrl
       },
       method: 'POST',
@@ -80,6 +80,10 @@ Page({
     });
   },
   onLoad: function () {
+    // wx.showLoading({
+    //   title: '读取中 ...',
+    //   mask: true
+    // });
     var that = this
     //调用应用实例的方法获取全局数据
     app.getUserInfo(function (userInfo) {
@@ -110,19 +114,51 @@ Page({
   },
   onShow: function () {
     //是否登陆
-    // if(!wx.getStorageSync('isLogin')){
-    //   wx.showModal({
-    //     title: "请登陆",
-    //     content: "您还没有登陆，请登陆后发布和编辑话题",
-    //     showCancel: false,
-    //     success: function(res){
-    //       if(res.confirm){
-    //         wx.navigateTo({
-    //           url: '../user/user'
-    //         })
-    //       }
-    //     }
-    //   })
-    // }
+    if(!wx.getStorageSync('isLogin')){
+      wx.showModal({
+        title: "请登陆",
+        content: "您还没有登陆，请登陆后发布话题",
+        showCancel: false,
+        success: function(res){
+          if(res.confirm){
+            wx.navigateTo({
+              url: '../reg/reg'
+            })
+          }
+        }
+      })
+    }
+  },
+  chooseImageTap: function () {
+    let _this = this;
+    wx.showActionSheet({
+      itemList: ['从相册中选择', '拍照'],
+      itemColor: "#f7982a",
+      success: function (res) {
+        if (!res.cancel) {
+          if (res.tapIndex == 0) {
+            _this.chooseImg(['album'])
+          } else if (res.tapIndex == 1) {
+            _this.chooseImg(['camera'])
+          }
+        }
+      }
+    })
+
+  },
+  chooseImg:function(sourceType){
+    var that=this
+    wx.chooseImage({
+      count: 1, // 默认9
+      sizeType: ['original', 'compressed'],
+      sourceType: sourceType,
+      success: function (res) {
+        console.info(res)
+        var tempFilePaths = res.tempFilePaths
+        that.setData({
+          logo: tempFilePaths
+        })
+      }
+    })
   }
 })

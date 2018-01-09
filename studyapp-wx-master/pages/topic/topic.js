@@ -20,5 +20,11 @@ Page({
 
     //ajax根据id拉取话题内容
     func.getTopic.call(this, options.id);
+  },
+  onShareAppMessage: function () {
+    return {
+      title: '我的日报',
+      desc: '好好学习，天天向上!'
+    }
   }
 })
