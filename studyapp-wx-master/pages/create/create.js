@@ -154,9 +154,27 @@ Page({
       sourceType: sourceType,
       success: function (res) {
         console.info(res)
-        var tempFilePaths = res.tempFilePaths
+        var tempFilePaths = res.tempFilePaths[0]
         that.setData({
           logo: tempFilePaths
+        })
+        //启动上传等待中...  
+        wx.showToast({
+          title: '正在上传...',
+          icon: 'loading',
+          mask: true,
+          duration: 10000
+        })  
+        wx.uploadFile({
+          url: app.globalData.domain + '/topic/upload',
+          filePath: tempFilePaths,
+          name: 'topic_img',
+          header: {
+            "Content-Type": "multipart/form-data"
+          },
+          success: function (res) { 
+            console.info('uploadddd',res) 
+          }
         })
       }
     })
