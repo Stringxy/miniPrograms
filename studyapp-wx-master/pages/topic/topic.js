@@ -6,15 +6,90 @@ Page({
   data: {
     topic: {},
     author: {},
-    userInfo: {}
+    userInfo: {},
+    hidden: true,
+    nocancel: false,
+    newComment: '',
+    comment: {}
+  },
+  //点击添加评论
+  bindAddButton: function () {
+    var that = this
+    //更新数据
+    that.setData({
+      hidden: false
+    })
+  },
+  cancel: function () {
+    var that = this
+    //更新数据
+    that.setData({
+      hidden: true
+    })
+  },
+  bindInput: function (e) {
+    var that = this
+    that.setData({
+      newComment: e.detail.value
+    })
+  },
+  preImg: function (e) {
+    var src = event.currentTarget.dataset.src;//获取data-src
+
+    //图片预览
+    wx.previewImage({
+      current: src
+    })
+  },
+  confirm: function () {
+    var that = this;
+    var userInfo = wx.getStorageSync('userInfo');
+    var content = that.data.newComment;
+    wx.request({
+      url: app.globalData.domain + '/comment/add',
+      data:
+      {
+        title: that.data.title,
+        content: content,
+        topicid: that.data.topic.topicid,
+        openid: userInfo.openid,
+        nick_name: userInfo.nickName,
+        avatar: userInfo.avatarUrl
+      },
+      method: 'POST',
+      success: function (data) {
+        var data = data.data;
+        console.info('datadatadata', data)
+        if (data.result == 200) {
+          wx.showToast({
+            title: data.resultNote,
+            icon: 'success',
+            success: function (res) {
+              setTimeout(function () {
+                wx.reLaunch({
+                  url: "../index/index"
+                });
+              }, 1000);
+            }
+          });
+
+        } else {
+          wx.showModal({
+            title: "提示",
+            content: data.resultNote,
+            showCancel: false
+          })
+        }
+      }
+    });
   },
   onLoad: function (options) {
     var that = this;
     //调用应用实例的方法获取全局数据
-    app.getUserInfo(function(userInfo){
+    app.getUserInfo(function (userInfo) {
       //更新数据
       that.setData({
-        userInfo:userInfo
+        userInfo: userInfo
       })
     })
 

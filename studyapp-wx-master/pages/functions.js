@@ -39,16 +39,17 @@ var funcs = {
             success: function(res) {
                 var data = res.data.detail;
                 console.info('topic',data)
-                data.createTime = util.formatTime(new Date(data.createTime));
+                data.create_time = util.formatTime(new Date(data.create_time));
                 if (typeof data.content == "string"){
                   data.content = html2json(convert(data.content));
                 }
                 var author={
-                  name: data.nickName
+                  name: data.nick_name
                 };
                 that.setData({
                   topic: data,
-                    author: author
+                  author: author,
+                  comment:data.comment
                 })
             },
             fail: function(err) {
@@ -129,6 +130,28 @@ var funcs = {
     //格式化内容
     html2text: function (html){
         return html.replace(/<[a-z]>/gi, "").split(/<\/[a-z]>/gi);
+    },
+    //根据examid拉取试题内容
+    getQuestions: function (id) {
+      var that = this;
+      wx.request({
+        url: hostName + '/question/get/' + id,
+        success: function (res) {
+          var data = res.data.detail;
+          //console.info('ques', data)
+          //data.create_time = util.formatTime(new Date(data.create_time));
+          // if (typeof data.content == "string") {
+          //   data.content = html2json(convert(data.content));
+          // }
+          that.setData({
+            Questions: data
+          });
+          wx.hideLoading();
+        },
+        fail: function (err) {
+          console.error("获取试题失败");
+        }
+      });
     }
 
 }

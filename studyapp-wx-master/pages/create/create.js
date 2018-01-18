@@ -8,7 +8,8 @@ Page({
     userInfo: {},
     title: '',
     content: '',
-    logo: '../../images/picture_add.png'
+    logo: '../../images/picture_add.png',
+    imgPath: ''
   },
   //栏目
   bindCateChange: function (e) {
@@ -38,7 +39,14 @@ Page({
   bindPushTap: function () {
     var that = this;
     var userInfo = wx.getStorageSync('userInfo');
-    var content = that.data.content + "\n发自学霸联盟微信小程序V0.6";
+    var content = that.data.content;
+    var img = that.data.imgPath;
+    console.info('imgggg',img)
+    wx.getSystemInfo({
+      success: function (res) {
+        content += '\n发自' + res.model
+      }
+    })
     //console.info("发布发布发布", that.data)
     //"\n发自学霸联盟微信小程序V0.6"
     wx.request({
@@ -50,7 +58,9 @@ Page({
         cate: that.data.cate,
         openid: userInfo.openid,
         nick_name: userInfo.nickName,
-        avatar: userInfo.avatarUrl
+        avatar: userInfo.avatarUrl,
+        userid: userInfo.id,
+        img: img
       },
       method: 'POST',
       success: function (data) {
@@ -114,13 +124,13 @@ Page({
   },
   onShow: function () {
     //是否登陆
-    if(!wx.getStorageSync('isLogin')){
+    if (!wx.getStorageSync('isLogin')) {
       wx.showModal({
         title: "请登陆",
         content: "您还没有登陆，请登陆后发布话题",
         showCancel: false,
-        success: function(res){
-          if(res.confirm){
+        success: function (res) {
+          if (res.confirm) {
             wx.navigateTo({
               url: '../reg/reg'
             })
@@ -146,15 +156,16 @@ Page({
     })
 
   },
-  chooseImg:function(sourceType){
-    var that=this
+  chooseImg: function (sourceType) {
+    var that = this
     wx.chooseImage({
       count: 1, // 默认9
       sizeType: ['original', 'compressed'],
       sourceType: sourceType,
       success: function (res) {
-        console.info(res)
+
         var tempFilePaths = res.tempFilePaths[0]
+        console.info('tempFilePaths', tempFilePaths)
         that.setData({
           logo: tempFilePaths
         })
@@ -163,17 +174,27 @@ Page({
           title: '正在上传...',
           icon: 'loading',
           mask: true,
-          duration: 10000
-        })  
+          duration: 4000
+        })
         wx.uploadFile({
           url: app.globalData.domain + '/topic/upload',
           filePath: tempFilePaths,
-          name: 'topic_img',
+          name: 'file',
           header: {
             "Content-Type": "multipart/form-data"
           },
-          success: function (res) { 
-            console.info('uploadddd',res) 
+          success: function (res) {
+            var data = JSON.parse(res.data)
+            if(data.detail==null){
+              wx.showModal({
+                title: "提示",
+                content: "上传失败"+res,
+                showCancel: false
+              })
+            }
+            that.setData({
+              imgPath: data.detail
+            })
           }
         })
       }

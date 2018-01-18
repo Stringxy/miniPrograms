@@ -10,9 +10,9 @@
 
   <scroll-view scroll-y="true" style="height: {{windowHeight}}px; width: {{windowWidth}}px;" bindscrolltolower="bindScrollToLower" bindscrolltoupper="bindScrollToUpper" class="topics">
     <block wx:for="{{topics}}" wx:key="id">
-      <view class="topics-item" bindtap="bindTopicTap" data-id="{{item.id}}">
+      <view class="topics-item" bindtap="bindTopicTap" data-id="{{item.topicid}}">
         <image class="topics-avatar" src="{{item.avatar}}"></image>
-        <view class="topics-title" url="../topic/topic?id={{item.id}}">{{item.title}}</view>
+        <view class="topics-title" url="../topic/topic?id={{item.topicid}}">{{item.title}}</view>
         <view class="topics-reply">{{item.comments}}/{{item.views}}</view>
       </view>
     </block>

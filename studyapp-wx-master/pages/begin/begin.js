@@ -37,7 +37,7 @@ Page({
   //开始软件设计师答题
   bindSoftwareDesignEngineer: function () {
     wx.navigateTo({
-      url: '../question/question'
+      url: '../question/question?id=1'
     })
   },
   //参与的话题

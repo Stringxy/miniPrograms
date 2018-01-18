@@ -1,5 +1,5 @@
 <view class="container create">
-  <view class="tip">发布当日日报</view>
+  <view class="tip">暂时只支持上传一张图片</view>
   <view class="form">
     <picker mode="selector" bindchange="bindCateChange" value="{{index}}" range="{{catesArr}}" class="form-picker">
       <view class="form-picker-val">{{catesArr[index]}}</view>

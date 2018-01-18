@@ -4,8 +4,11 @@
 
   <view class="topic-main">
     <view class="topic-title">{{topic.title}}</view>
-    <view class="topic-created">{{author.name}}  {{topic.createTime}}</view>
+    <view class="topic-created">
+     <image class="topics-avatar" src="{{topic.avatar}}"></image>
+     {{author.name}}  {{topic.create_time}}</view>
     <view class="topic-content">
+    <image bindtap='preImg' class="topicImg" src="https://xyiscoding.top/img/{{topic.img}}"></image>
         <block wx:if="{{topic.content.child.length > 0}}">
             <block wx:for="{{topic.content.child}}">
                 <template is="tpl-0" data="{{item}}"></template>
@@ -15,3 +18,19 @@
   </view>
 
 </view>
+
+<scroll-view scroll-y="true" style="height: {{windowHeight}}px; width: {{windowWidth}}px;" bindscrolltolower="bindScrollToLower" bindscrolltoupper="bindScrollToUpper" class="topics">
+    <block wx:for="{{comment}}" wx:key="id">
+      <view class="topics-item" bindtap="bindTopicTap" data-id="{{item.topicid}}">
+        <image class="topics-avatar" src="{{item.avatar}}"></image>
+        <view class="topics-title" >{{item.content}}</view>
+        <!-- <view class="topics-reply">{{item.comments}}/{{item.views}}</view> -->
+      </view>
+    </block>
+    <view class="tip" style="text-align:center" wx:if="{{!hasMore}}">评论已加载完</view>
+  </scroll-view>
+
+<image class="addButton" src="/images/add_comment.png" bindtap='bindAddButton'></image>
+<modal hidden="{{hidden}}" title="发布评论" confirm-text="发布" cancel-text="取消" bindcancel="cancel" bindconfirm="confirm" no-cancel="{{nocancel}}">
+    <input bindinput="bindInput" placeholder="点击这里输入评论..." auto-focus/>
+</modal>

@@ -12,20 +12,24 @@
         <image class="icon" src="/resource/result-success.png" />
         <view class="title">恭喜您，闯关成功！</view>
         <view class="detail">
-            <text>{{detail}}</text>
+            <text>答对了{{detail.right_number}}道题，答错了{{detail.wrong_number}}道题。</text>
         </view>
         <view class="extra">
-            <text>{{extra}}</text>
+            <text>获得5积分！点击右上角分享</text>
         </view>
-        <view class="button" bindtap="changePrize" hidden="{{upgradeGiftRecieved}}">兑换</view>
-        <view class="button" bindtap="navigateBack" hidden="{{!upgradeGiftRecieved}}">已兑奖</view>
+        <view class="button" bindtap="goBack">返回首页</view>
+        <!-- <view class="button" bindtap="onShareAppMessage">我要分享</view> -->
     </view>
     <view class="result" hidden="{{!loadingComplete || waitingForExchange}}">
         <image class="icon" src="/resource/result-failure.png" />
         <view class="title failure">很抱歉，闯关失败！</view>
         <view class="detail">
-            <text>5 道题目中您没有答对 3 道哦\n明天请再来挑战</text>
+            <text>10 道题目中您没有答对 {{detail.wrong_number}} 道哦\n</text>
         </view>
-        <view class="button" bindtap="reLaunchGame">明天见</view>
+                <view class="extra">
+            <text>获得5积分！点击右上角分享</text>
+        </view>
+        <view class="button" bindtap="goBack">返回首页</view>
+         <!-- <view class="button" bindtap="onShareAppMessage">我要分享</view> -->
     </view>
 </view>

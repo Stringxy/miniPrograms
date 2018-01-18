@@ -39,6 +39,7 @@ Page({
   //点击进入话题详情
   bindTopicTap: function(e) {
     var data = e.currentTarget.dataset;
+    console.info('topicccc',e)
     wx.navigateTo({
       url: '../topic/topic?id='+data.id
     })
@@ -46,8 +47,8 @@ Page({
   //点击进入发布话题
   bindAddButton: function () {
     console.info('addddddd')
-    wx.redirectTo({
-      url: '../create/create',
+    wx.navigateTo({
+      url: '../create/create'
     })
   },
   //滚动加载列表
@@ -78,7 +79,7 @@ Page({
       title: '正在刷新',
       icon: 'loading'
     });
-    func.getTopics.call(this, 1);
+    func.getTopics.call(this, 0);
   },
   onLoad: function () {
     var that = this
@@ -102,7 +103,7 @@ Page({
       })
     })
     //默认加载全部
-    func.getTopics.call(this, 1);
+    func.getTopics.call(this, 0);
     wx.hideLoading()
     console.info('data',that.data)
   }

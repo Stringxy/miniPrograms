@@ -1,18 +1,34 @@
 <!-- question.wxml -->
 
 <view class="full-page">
-    <image class="background" src="/resource/background.jpg" />
-    <view class="question" wx:for="{{Questions}}" wx:key="{{item.id}}" hidden="{{index != currentIndex}}">
-        <view class="title">{{item.title}}</view>
-        <radio-group class="choices" data-qid="{{index}}" bindchange="answerSelect">
-            <label wx:for="{{item.choices}}" wx:for-item="title" wx:for-index="idx" wx:key="{{title}}">
-                <radio value="{{idx}}" /> <text>{{title}}</text>
-            </label>
-        </radio-group>
-    </view>
-    <view class="countDown">
-        <view class="nextQuestion" bindtap="nextQuestion">{{questionButtonText}}</view>
-        <image class="ico-clock" src="/resource/ico-clock.png" />
-        <text>本页答题时间剩余 {{remainSeconds}} 秒</text>
-    </view>
+  <image class="background" src="/resource/background.jpg" />
+  <view class="question" wx:for="{{Questions}}" hidden="{{index != currentIndex}}">
+    <scroll-view scroll-y="true" style="height: 100px; width: 100%;" class="title">{{item.title}}
+      <image class="quesImg" src="{{item.img}}" />
+    </scroll-view>
+
+    <radio-group class="choices" data-qid="{{index}}" bindchange="answerSelect">
+      <label>
+        <radio value="1" />
+        <text>{{item.a}}</text>
+      </label>
+      <label>
+        <radio value="2" />
+        <text>{{item.b}}</text>
+      </label>
+      <label>
+        <radio value="3" />
+        <text>{{item.c}}</text>
+      </label>
+      <label>
+        <radio value="4" />
+        <text>{{item.d}}</text>
+      </label>
+    </radio-group>
+  </view>
+  <view class="countDown">
+    <view class="nextQuestion" bindtap="nextQuestion">{{questionButtonText}}</view>
+    <image class="ico-clock" src="/resource/ico-clock.png" />
+    <text>本页答题时间剩余 {{remainSeconds}} 秒</text>
+  </view>
 </view>

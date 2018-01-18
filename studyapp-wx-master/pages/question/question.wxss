@@ -16,8 +16,8 @@
 
 .choices {
     position: absolute;
-    top: 16%;
-    left: 3%;
+    top: 30%;
+    left: 3%; 
     width: 97%;
 }
 
