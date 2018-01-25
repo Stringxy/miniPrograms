@@ -68,7 +68,7 @@
   margin-top: 7px;
 }
 .topicImg{
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   display:block;
 }

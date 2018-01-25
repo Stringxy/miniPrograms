@@ -8,7 +8,7 @@
      <image class="topics-avatar" src="{{topic.avatar}}"></image>
      {{author.name}}  {{topic.create_time}}</view>
     <view class="topic-content">
-    <image bindtap='preImg' class="topicImg" src="https://xyiscoding.top/img/{{topic.img}}"></image>
+    <image bindtap='preImg' class="topicImg" src="https://xyiscoding.top/img/{{topic.img}}" data-src="https://xyiscoding.top/img/{{topic.img}}"></image>
         <block wx:if="{{topic.content.child.length > 0}}">
             <block wx:for="{{topic.content.child}}">
                 <template is="tpl-0" data="{{item}}"></template>

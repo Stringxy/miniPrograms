@@ -3,7 +3,7 @@
 <view class="full-page">
   <image class="background" src="/resource/background.jpg" />
   <view class="question" wx:for="{{Questions}}" hidden="{{index != currentIndex}}">
-    <scroll-view scroll-y="true" style="height: 100px; width: 100%;" class="title">{{item.title}}
+    <scroll-view scroll-y="true" style="height: 100px; width: 100%;" class="title">{{item.number}}.{{item.title}}
       <image class="quesImg" src="{{item.img}}" />
     </scroll-view>
 

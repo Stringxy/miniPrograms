@@ -34,11 +34,15 @@ Page({
     })
   },
   preImg: function (e) {
-    var src = event.currentTarget.dataset.src;//获取data-src
-
-    //图片预览
+    console.info(e);
+    var src = e.target.dataset.src;//获取data-src
+    //图片数组暂时只有一张
+    var list= [ ]
+    list[0]=src
+    console.info('llll',list)
     wx.previewImage({
-      current: src
+      current: src,
+      urls: list
     })
   },
   confirm: function () {

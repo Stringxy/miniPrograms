@@ -36,8 +36,24 @@ Page({
   },
   //开始软件设计师答题
   bindSoftwareDesignEngineer: function () {
-    wx.navigateTo({
-      url: '../question/question?id=1'
+    wx.showActionSheet({
+      itemList: ['开始测试', '答题记录'],
+      success: function (res) {
+        var index = res.tapIndex;
+        if (index == 0) {
+          wx.navigateTo({
+            url: '../question/question?id=1'
+          })
+        } else if (index == 1) {
+          wx.navigateTo({
+            url: '../userTopics/userTopics?userId=' + wx.getStorageSync('userInfo')._id + "&etype=getExamRecord"
+          })
+        }
+        console.log(res.tapIndex)
+      },
+      fail: function (res) {
+        console.log(res.errMsg)
+      }
     })
   },
   //参与的话题

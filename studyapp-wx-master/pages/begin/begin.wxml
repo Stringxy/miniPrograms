@@ -1,9 +1,9 @@
 <view class="container user" wx:if="{{showUser}}">
 
-  <view class="user-header">
+  <!-- <view class="user-header">
     <image src="{{userInfo.avatarUrl}}" class="user-avatar"></image>
     <view class="user-name">{{userInfo.nickName}}</view>
-  </view>
+  </view> -->
   <view class="user-body">
     <view class="user-box">
       <image class="user-box-img" src="/images/user.png"></image>

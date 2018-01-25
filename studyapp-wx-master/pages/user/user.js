@@ -36,6 +36,7 @@ Page({
   },
   //发布的话题
   bindMyTopics: function(){
+    console.info('发布的话题发布的话题')
     wx.navigateTo({
       url: '../userTopics/userTopics?userId='+wx.getStorageSync('userInfo')._id+"&etype=getWxUserTopics"
     })

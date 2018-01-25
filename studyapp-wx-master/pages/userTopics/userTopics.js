@@ -7,7 +7,8 @@ Page({
     page: {},
     hasMore: true,
     userInfo: {},
-    etype: ""
+    etype: "",
+    ifRecord:false
   },
   //滚动加载列表
   bindScrollToLower: function(){
@@ -29,8 +30,8 @@ Page({
   },
   //点击进入话题详情
   bindTopicTap: function(e) {
-    console.info('eeeeeeee',e)
     var data = e.currentTarget.dataset;
+    console.info('eeeeeeee', e)
     wx.navigateTo({
       url: '../topic/topic?id='+data.id
     })
@@ -52,15 +53,20 @@ Page({
 
     //默认加载第一页
     var userInfo = wx.getStorageSync('userInfo');
-    //console.info('userInfouserInfouserInfo', userInfo)
-    func.getTopicsByUserId.call(that, userInfo.openid, 0, options.etype);
-
+    func.getTopicsByUserId.call(that, userInfo.id, 0, options.etype);
     //标题
-    if(this.data.etype == "getWxUserReplies"){
+    if (this.data.etype == "getWxUserReplies"){
       wx.setNavigationBarTitle({
         title: '参与的话题'
       })
     }
-
+    if (this.data.etype == "getExamRecord") {
+      wx.setNavigationBarTitle({
+        title: '答题记录'
+      })
+      that.setData({
+        ifRecord: true
+      })
+    }
   }
 })

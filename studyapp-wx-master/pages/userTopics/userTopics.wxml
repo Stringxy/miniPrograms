@@ -1,11 +1,26 @@
-<view class="container userTopics">
+<view class="container userTopics" hidden='{{ifRecord}}'>
 
   <scroll-view scroll-y="true" bindscrolltolower="bindScrollToLower" class="topics">
     <block wx:for="{{topics}}" wx:key="_id">
-      <view class="topics-item" bindtap="bindTopicTap" data-id="{{item.id}}">
+      <view class="topics-item" bindtap="bindTopicTap" data-id="{{item.topicid}}">
         <image class="topics-avatar" src="{{item.avatar}}"></image>
         <view class="topics-title" url="../topic/topic?id={{item.id}}">{{item.title}}</view>
         <view class="topics-reply">{{item.comments}}/{{item.views}}</view>
+      </view>
+    </block>
+    <view class="tip" style="text-align:center" wx:if="{{!hasMore}}">全部已加载完</view>
+  </scroll-view>
+
+</view>
+
+<view class="container userTopics" hidden='{{!ifRecord}}'>
+
+  <scroll-view scroll-y="true" bindscrolltolower="bindScrollToLower" class="topics">
+    <block wx:for="{{topics}}" wx:key="_id">
+      <view class="topics-item"  data-id="{{item.id}}">
+        <view class="topics-title" wx:if="{{item.right_number>5}}">闯关成功</view>
+        <view class="topics-title" wx:if="{{item.right_number<6}}">闯关失败</view>
+        <view class="topics-reply">{{item.right_number}}/{{item.wrong_number}}</view>
       </view>
     </block>
     <view class="tip" style="text-align:center" wx:if="{{!hasMore}}">全部已加载完</view>

@@ -18,6 +18,28 @@ Page({
     this.setData({
       detail: detail
     })
+
+    let data = {
+      "examId": detail.exam_id,
+      "rightNumber": detail.right_number,
+      "userId": detail.user_id,
+      "wrongNumber": detail.wrong_number
+    }
+    wx.request({
+      url: getApp().globalData.domain + '/record/add',
+      method:'POST',
+      data:data,
+      success: function (res) {
+        if (!res.data.result == 200) {
+          console.error("新增答题记录失败");
+        }else{
+          console.info("新增答题记录成功");
+        }
+      },
+      fail: function (err) {
+        console.error("新增答题记录失败");
+      }
+    });
   },
   onShow() {
     wx.showLoading({
