@@ -32,22 +32,26 @@ Page({
   //立即绑定
   //1、获取openId,与登陆账号关联，成功后显示用户中心
   bindUserTap: function () {
+    
     var that = this;
+    console.info('userr', that.data.userInfo)
+    const userInfo=that.data.userInfo;
+    userInfo.openid=wx.getStorageSync('openid')
     wx.request({
       url: app.globalData.domain + '/user/bindWeixin',
-      data:  that.data.userInfo ,
+      data:  userInfo ,
       method: 'POST',
       success: function (data) {
         var data = data.data;
         if (data.result==200) {
           wx.setStorageSync('isLogin', 'true');
-          wx.setStorageSync('userInfo', data.userInfo);
+          wx.setStorageSync('userInfo', data.userInfo); 
           that.setData({
             showLogin: false,
             showUser: true
           });
           wx.redirectTo({
-            url: 'pages/index/index',
+            url: '../index/index',
           })
         } else {
           wx.showModal({
@@ -127,6 +131,7 @@ Page({
 
     //userInfo
     app.getUserInfo(function (userInfo) {
+      console.info('onLoad',userInfo)
       that.setData({
         userInfo: userInfo
       })

@@ -1,8 +1,10 @@
 function convert(str){
-    console.log(str)
-    return str = str.replace(/&nbsp;/g, " ")
+  console.log(str)
+    str = str.replace(/&nbsp;/g, " ")
         .replace(/&lt;/g, "‹")
         .replace(/&gt;/g, "›")
+        .replace("<", "‹")
+        .replace(">", "›")
         .replace(/&amp;/g, "&")
         .replace(/&quot;/g, '"')
         .replace(/&copy;/g, "©")
@@ -11,6 +13,7 @@ function convert(str){
         .replace(/&divide;/g, "÷")
         .replace(/&#39;/g, "'")
         .replace(/\n/g, "<br>");
+        return str;
 }
 
 module.exports = convert;

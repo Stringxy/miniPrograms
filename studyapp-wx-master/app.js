@@ -27,9 +27,9 @@ App({
             success: function (info) {
               console.info(res, 'resresres');
               var edata = info.userInfo;
-              wx.setStorageSync('weixinUser', edata)
               edata.code = res.code;
               console.info(edata, 'edataedataedataedata');
+              wx.setStorageSync('weixinUser', edata)
               if (res.code) {
                 //发起网络请求
                 wx.request({
@@ -37,11 +37,14 @@ App({
                   method: 'GET',
                   success: function (res) {
                     if (res.data.result == 200) {
+                      if(res.data.detail.id>0){
                       that.globalData.userInfo = res.data.detail;
                       wx.setStorageSync('isLogin', true);
                       wx.setStorageSync('userInfo', res.data.detail)
                       typeof cb == "function" && cb(that.globalData.userInfo)
-                      
+                      }else{
+                        wx.setStorageSync('openid', res.data.detail.openid)
+                      }
                     }
 
                   }
