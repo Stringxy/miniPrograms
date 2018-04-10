@@ -1,3 +1,4 @@
+var func = require("../functions.js");
 //获取应用实例
 var app = getApp()
 Page({
@@ -11,7 +12,8 @@ Page({
     email: "",
     userInfo: {},
     storageSize: 0,
-    storageLimitSize: 0
+    storageLimitSize: 0,
+    exams:[]
   },
   //用户名
   bindUserNameBlur: function (e) {
@@ -35,18 +37,20 @@ Page({
     })
   },
   //开始软件设计师答题
-  bindSoftwareDesignEngineer: function () {
+  bindSoftwareDesignEngineer: function (e) {
+    var data = e.currentTarget.dataset;
+    console.info('dadaa',data)
     wx.showActionSheet({
       itemList: ['开始测试', '答题记录'],
       success: function (res) {
         var index = res.tapIndex;
         if (index == 0) {
           wx.navigateTo({
-            url: '../question/question?id=1'
+            url: '../question/question?id='+data.id
           })
         } else if (index == 1) {
           wx.navigateTo({
-            url: '../userTopics/userTopics?userId=' + wx.getStorageSync('userInfo')._id + "&etype=getExamRecord"
+            url: '../userTopics/userTopics?userId=' + wx.getStorageSync('userInfo')._id + "&etype=getExamRecord&examid=" + data.id
           })
         }
         console.log(res.tapIndex)
@@ -92,10 +96,10 @@ Page({
   },
   onShow: function () {
     //是否登陆
-    if (!wx.getStorageSync('isLogin')) {
+    if (!wx.getStorageSync('isLogin')||!wx.getStorageSync('userInfo')) {
       wx.showModal({
         title: "请登陆",
-        content: "您还没有登陆，请登陆后发布话题",
+        content: "您还没有登陆，请登陆后继续操作",
         showCancel: false,
         success: function (res) {
           if (res.confirm) {
@@ -111,7 +115,7 @@ Page({
     var that = this;
 
     //console.log(wx.getStorageSync('isLogin'))
-
+    func.getExams.call(this);
 
     that.setData({
       showUser: true

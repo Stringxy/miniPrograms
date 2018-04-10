@@ -41,7 +41,14 @@ Page({
     var userInfo = wx.getStorageSync('userInfo');
     var content = that.data.content;
     var img = that.data.imgPath;
-    console.info('imgggg',img)
+    if(content.length<10){
+      wx.showModal({
+        title: "提示",
+        content: "文章内容至少大于10个字，拒绝灌水哦～",
+        showCancel: false
+      })
+      return;
+    }
     wx.getSystemInfo({
       success: function (res) {
         content += '\n发自' + res.model
@@ -56,7 +63,7 @@ Page({
         title: that.data.title,
         content: content,
         cate: that.data.cate,
-        openid: userInfo.openid,
+        openid: wx.getStorageSync('openid'),
         nick_name: userInfo.nickName,
         avatar: userInfo.avatarUrl,
         userid: userInfo.id,
@@ -95,12 +102,13 @@ Page({
     //   mask: true
     // });
     var that = this
-    //调用应用实例的方法获取全局数据
-    app.getUserInfo(function (userInfo) {
-      //更新数据
-      that.setData({
-        userInfo: userInfo
-      })
+    // //调用应用实例的方法获取全局数据
+    // app.getUserInfo(function (userInfo) {
+    //   //更新数据
+
+    // })
+    that.setData({
+      userInfo: wx.getStorageSync("userInfo")
     })
 
     //catesArr

@@ -9,12 +9,13 @@
     "pages/begin/begin",
     "pages/question/question",
     "pages/result/result",
-    "pages/reg/reg"
+    "pages/reg/reg",
+    "pages/quesdetail/quesdetail"
   ],
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "学霸联盟",
+    "navigationBarTitleText": "软考助手",
     "navigationBarTextStyle":"black",
     "enablePullDownRefresh":true
   },
@@ -26,7 +27,7 @@
       "selectedIconPath": "images/icon_tabBar_home_selected.png"
     }, {
       "pagePath": "pages/begin/begin",
-      "text": "测试",
+      "text": "软考真题",
       "iconPath": "images/icon_tabBar_write.png",
       "selectedIconPath": "images/icon_tabBar_write_selected.png"
     }, {

@@ -2,29 +2,33 @@
 
 <view class="full-page">
   <image class="background" src="/resource/background.jpg" />
-  <view class="question" wx:for="{{Questions}}" hidden="{{index != currentIndex}}">
-    <scroll-view scroll-y="true" style="height: 100px; width: 100%;" class="title">{{item.number}}.{{item.title}}
-      <image class="quesImg" src="{{item.img}}" />
+  <view class="question" wx:for="{{Questions}}" hidden="{{index != currentIndex}}" wx:key="{{id}}">
+    <scroll-view scroll-y="true" style="height: 80%; width: 100%;">
+      <label class="title">{{item.number}}.{{item.title}}</label>
+      <block wx:if="{{item.img}}" wx:for="{{item.img}}" wx:for-item="i">
+      <image class="quesImg" bindtap="preImg" src="{{i}}" data-src="{{i}}" style="height: 20%;width: 70%;"  />
+      </block>
+      <radio-group class="choices " data-qid="{{index}} " bindchange="answerSelect">
+        <label>
+          <radio value="1" />
+          <text>{{item.a}}</text>
+        </label>
+        <label>
+          <radio value="2" />
+          <text>{{item.b}}</text>
+        </label>
+        <label>
+          <radio value="3" />
+          <text>{{item.c}}</text>
+        </label>
+        <label>
+          <radio value="4" />
+          <text>{{item.d}}</text>
+        </label>
+      </radio-group>
     </scroll-view>
 
-    <radio-group class="choices" data-qid="{{index}}" bindchange="answerSelect">
-      <label>
-        <radio value="1" />
-        <text>{{item.a}}</text>
-      </label>
-      <label>
-        <radio value="2" />
-        <text>{{item.b}}</text>
-      </label>
-      <label>
-        <radio value="3" />
-        <text>{{item.c}}</text>
-      </label>
-      <label>
-        <radio value="4" />
-        <text>{{item.d}}</text>
-      </label>
-    </radio-group>
+    <view class='selected' wx:if="{{selected}}">{{currentRight}}</view>
   </view>
   <view class="countDown">
     <view class="nextQuestion" bindtap="nextQuestion">{{questionButtonText}}</view>

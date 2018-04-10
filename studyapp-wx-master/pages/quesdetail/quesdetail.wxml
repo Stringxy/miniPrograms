@@ -1,0 +1,45 @@
+<import src="html2wxml.wxml" />
+
+<view class="container topic">
+
+  <view class="topic-main">
+    <view class="topic-title">{{topic.title}}</view>
+    <view class="topic-created">
+     <!-- <image class="topics-avatar" src="{{topic.avatar}}"></image> -->
+      {{question.number}}.{{question.title}}</view>
+    <view class="topic-content">
+    <block wx:if="{{quesiton.img}}" wx:for="{{question.img}}" >
+    <image bindtap='preImg' class="topicImg" src="{{item}}" data-src="{{item}}" ></image>
+    </block>
+    正确答案：
+    <text wx:if="{{question.answer==1}}">{{question.a}}\n</text>
+    <text wx:if="{{question.answer==2}}">{{question.b}}\n</text>
+    <text wx:if="{{question.answer==3}}">{{question.c}}\n</text>
+    <text wx:if="{{question.answer==4}}">{{question.d}}\n</text>
+    解析：
+    <text>{{question.analysis}}</text>
+        <!-- <block wx:if="{{question.title.child.length > 0}}">
+            <block wx:for="{{question.title.hild}}">
+                <template is="tpl-0" data="{{item}}"></template>
+            </block>
+        </block> -->
+    </view>
+  </view>
+
+</view>
+
+<!-- <scroll-view scroll-y="true" style="height: {{windowHeight}}px; width: {{windowWidth}}px;" bindscrolltolower="bindScrollToLower" bindscrolltoupper="bindScrollToUpper" class="topics">
+    <block wx:for="{{comment}}" wx:key="id">
+      <view class="topics-item" bindtap="bindTopicTap" data-id="{{item.topicid}}">
+        <image class="topics-avatar" src="{{item.avatar}}"></image>
+        <view class="topics-title" >{{item.content}}</view>
+        <!-- <view class="topics-reply">{{item.comments}}/{{item.views}}</view>
+      </view>
+    </block>
+    <view class="tip" style="text-align:center" wx:if="{{!hasMore}}">评论已加载完</view>
+  </scroll-view> -->
+
+<!-- <image class="addButton" src="/images/add_comment.png" bindtap='bindAddButton'></image>
+<modal hidden="{{hidden}}" title="发布评论" confirm-text="发布" cancel-text="取消" bindcancel="cancel" bindconfirm="confirm" no-cancel="{{nocancel}}">
+    <input bindinput="bindInput" placeholder="点击这里输入评论..." auto-focus/>
+</modal> -->

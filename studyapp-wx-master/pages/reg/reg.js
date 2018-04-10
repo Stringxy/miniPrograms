@@ -32,11 +32,32 @@ Page({
   //立即绑定
   //1、获取openId,与登陆账号关联，成功后显示用户中心
   bindUserTap: function () {
-    
     var that = this;
-    console.info('userr', that.data.userInfo)
-    const userInfo=that.data.userInfo;
+    var userInfo=that.data.userInfo;
     userInfo.openid=wx.getStorageSync('openid')
+    //console.info('bindopenid',wx.getStorageSync('openid'))
+    //console.info('userr', userInfo)
+    var regLowerCase = new RegExp('[a-z]', 'g');
+    //console.info('regg', regLowerCase.exec(userInfo.username))
+    if (!regLowerCase.exec(userInfo.username)) {
+      wx.showModal({
+        title: '提示',
+        content: '用户名只能为小写英文字母',
+      });
+      return;
+    }
+    if (userInfo.username.length < 4 || userInfo.password.length < 6) {
+      wx.showModal({
+        title: '提示',
+        content: '用户名不能小于4位/密码不能小于6位',
+      });
+      return;
+    }
+    wx.showToast({
+      title: "loading",
+      icon: 'loading',
+      duration: 2000
+    });
     wx.request({
       url: app.globalData.domain + '/user/bindWeixin',
       data:  userInfo ,
@@ -50,9 +71,7 @@ Page({
             showLogin: false,
             showUser: true
           });
-          wx.redirectTo({
-            url: '../index/index',
-          })
+          wx.reLaunch({ url: '/pages/index/index' });
         } else {
           wx.showModal({
             title: "提示",
@@ -66,7 +85,27 @@ Page({
   //注册账号
   bindRegNewTap: function () {
     var that = this;
-    //console.info('userrrr',that.data.userInfo)
+    var userInfo = that.data.userInfo;
+    if (userInfo.username.length<4||userInfo.password.length<6){
+      wx.showModal({
+        title: '提示',
+        content: '用户名不能小于4位/密码不能小于6位',
+      });
+      return;
+    }
+    var regLowerCase = new RegExp('[a-z]', 'g');
+    if (!regLowerCase.exec(userInfo.username)) {
+      wx.showModal({
+        title: '提示',
+        content: '用户名只能为小写英文字母',
+      });
+      return;
+    }
+    wx.showToast({
+      title: "loading",
+      icon: 'loading',
+      duration: 2000
+    });
     wx.request({
       url: app.globalData.domain + '/user/register',
       data: that.data.userInfo,
@@ -90,7 +129,7 @@ Page({
         } else {
           wx.showModal({
             title: "提示",
-            content: data.msg,
+            content: "注册失败，可能用户名被占用或者网络原因",
             showCancel: false
           })
         }
@@ -115,27 +154,23 @@ Page({
   onLoad: function (options) {
     var that = this;
 
-    console.log(wx.getStorageSync('isLogin'))
-    that.data.userInfo = wx.getStorageSync('weixinUser');
-    console.log(that.data.userInfo)
+   // console.log('isLoginisLogin',wx.getStorageSync('isLogin'))
+    //console.log('that.data.userInfo',that.data.userInfo)
     //是否登陆过？
-    if (wx.getStorageSync('isLogin') == "true") {
-      that.setData({
-        showUser: true
-      })
-    } else {
+
+      //userInfo
+      var userInfo = wx.getStorageSync('weixinUser');
+        that.setData({
+          userInfo: userInfo
+        })
+
+      console.log('that.data.userInfo', that.data.userInfo)
       that.setData({
         showLogin: true
       })
-    }
+    
 
-    //userInfo
-    app.getUserInfo(function (userInfo) {
-      console.info('onLoad',userInfo)
-      that.setData({
-        userInfo: userInfo
-      })
-    })
+    
 
     //storageSize
     var wxStorage = wx.getStorageInfoSync();

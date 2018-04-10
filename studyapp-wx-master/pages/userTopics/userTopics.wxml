@@ -1,4 +1,4 @@
-<view class="container userTopics" hidden='{{ifRecord}}'>
+<view class="container userTopics" hidden='{{ifRecord||ifWrongRecords}}'>
 
   <scroll-view scroll-y="true" bindscrolltolower="bindScrollToLower" class="topics">
     <block wx:for="{{topics}}" wx:key="_id">
@@ -17,10 +17,24 @@
 
   <scroll-view scroll-y="true" bindscrolltolower="bindScrollToLower" class="topics">
     <block wx:for="{{topics}}" wx:key="_id">
-      <view class="topics-item"  data-id="{{item.id}}">
-        <view class="topics-title" wx:if="{{item.right_number>5}}">闯关成功</view>
-        <view class="topics-title" wx:if="{{item.right_number<6}}">闯关失败</view>
+      <view class="topics-item" data-id="{{item.id}}">
+        <view class="topics-title" style="color:green;" wx:if="{{item.right_number>5}}">闯关成功</view>
+        <view class="topics-title" style="color:red;" wx:if="{{item.right_number<6}}">闯关失败</view>
         <view class="topics-reply">{{item.right_number}}/{{item.wrong_number}}</view>
+      </view>
+    </block>
+    <view class="tip" style="text-align:center" wx:if="{{!hasMore}}">全部已加载完</view>
+  </scroll-view>
+
+</view>
+
+<view class="container userTopics" hidden='{{!ifWrongRecords}}'>
+
+  <scroll-view scroll-y="true" bindscrolltolower="bindScrollToLower" class="topics">
+    <block wx:for="{{topics}}" wx:key="_id">
+      <view class="topics-item" bindtap="bindQuesTap" data-id="{{item.question_id}}">
+        <view class="topics-title">{{item.question_title}}</view>
+        <view class="topics-reply">{{item.create_time}}</view>
       </view>
     </block>
     <view class="tip" style="text-align:center" wx:if="{{!hasMore}}">全部已加载完</view>

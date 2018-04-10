@@ -15,7 +15,7 @@
             <text>答对了{{detail.right_number}}道题，答错了{{detail.wrong_number}}道题。</text>
         </view>
         <view class="extra">
-            <text>获得5积分！点击右上角分享</text>
+            <text>点击右上角分享,召集小伙伴们来刷题吧！</text>
         </view>
         <view class="button" bindtap="goBack">返回首页</view>
         <!-- <view class="button" bindtap="onShareAppMessage">我要分享</view> -->
@@ -27,7 +27,7 @@
             <text>10 道题目中您没有答对 {{detail.wrong_number}} 道哦\n</text>
         </view>
                 <view class="extra">
-            <text>获得5积分！点击右上角分享</text>
+            <text>点击右上角分享,召集小伙伴们来刷题吧！</text>
         </view>
         <view class="button" bindtap="goBack">返回首页</view>
          <!-- <view class="button" bindtap="onShareAppMessage">我要分享</view> -->

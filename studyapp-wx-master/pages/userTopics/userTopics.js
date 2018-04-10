@@ -8,7 +8,8 @@ Page({
     hasMore: true,
     userInfo: {},
     etype: "",
-    ifRecord:false
+    ifRecord:false,
+    ifWrongRecords:false
   },
   //滚动加载列表
   bindScrollToLower: function(){
@@ -39,12 +40,12 @@ Page({
   onLoad: function (options) {
     var that = this
     //调用应用实例的方法获取全局数据
-    app.getUserInfo(function(userInfo){
-      //更新数据
-      that.setData({
-        userInfo:userInfo
-      })
-    })
+    // app.getUserInfo(function(userInfo){
+    //   //更新数据
+    //   that.setData({
+    //     userInfo:userInfo
+    //   })
+    // })
 
     //列表类型
     that.setData({
@@ -53,7 +54,8 @@ Page({
 
     //默认加载第一页
     var userInfo = wx.getStorageSync('userInfo');
-    func.getTopicsByUserId.call(that, userInfo.id, 0, options.etype);
+    console.info('userInfo', userInfo)
+    func.getTopicsByUserId.call(that, userInfo.id, 0, options.etype,options.examid);
     //标题
     if (this.data.etype == "getWxUserReplies"){
       wx.setNavigationBarTitle({
@@ -68,5 +70,21 @@ Page({
         ifRecord: true
       })
     }
-  }
+    if (this.data.etype == "getWrongRecord") {
+      wx.setNavigationBarTitle({
+        title: '错题记录'
+      })
+      that.setData({
+        ifWrongRecords: true
+      })
+    }
+  },
+  //点击进入话题详情
+  bindQuesTap: function (e) {
+    var data = e.currentTarget.dataset;
+    console.info('eeeeeeee', e)
+    wx.navigateTo({
+      url: '../quesdetail/quesdetail?id=' + data.id
+    })
+  },
 })

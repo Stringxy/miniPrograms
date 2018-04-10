@@ -47,6 +47,11 @@ Page({
       url: '../userTopics/userTopics?userId='+wx.getStorageSync('userInfo')._id+"&etype=getWxUserReplies"
     })
   },
+  bindMyWrong:function(){
+    wx.navigateTo({
+      url: '../userTopics/userTopics?userId=' + wx.getStorageSync('userInfo')._id + "&etype=getWrongRecord"
+    })
+  },
   //站内信
   bindMyMsg: function(){
     wx.navigateTo({
@@ -77,10 +82,10 @@ Page({
   },
   onShow: function () {
     //是否登陆
-    if (!wx.getStorageSync('isLogin')) {
+    if (!wx.getStorageSync('isLogin')||!wx.getStorageSync('userInfo')) {
       wx.showModal({
         title: "请登陆",
-        content: "您还没有登陆，请登陆后发布话题",
+        content: "您还没有登陆，请登陆后继续操作",
         showCancel: false,
         success: function (res) {
           if (res.confirm) {
@@ -116,7 +121,7 @@ Page({
     //userInfo
    
       that.setData({
-        userInfo:wx.getStorageSync('userInfo')
+        userInfo: wx.getStorageSync("userInfo") ? wx.getStorageSync("userInfo"):wx.getStorageSync('weixinUser')
       })
     
 

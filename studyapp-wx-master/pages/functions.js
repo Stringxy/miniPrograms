@@ -19,7 +19,7 @@ var funcs = {
       method: 'GET',
       success: function (res) {
         that.setData({
-          topics: res.data.result == 200 ? res.data.detail : that.data.topics.concat(res.data.topics),
+          topics: page == 1 ? res.data.detail : that.data.topics.concat(res.data.detail),
           page: page,
           loadflag: false
         })
@@ -73,14 +73,17 @@ var funcs = {
   },
 
   //发布、参与的话题
-  getTopicsByUserId: function (id, page, etype) {
+  getTopicsByUserId: function (id, page, etype,examid) {
     var that = this;
     var page = page || 1;
     var url = hostName + '/topic/getCommented/' + id + "/" + page;
     if (etype == "getExamRecord") {
-      url = hostName + '/record/get/' + id + "/" + page + "/10";
+      console.info('examidexamidexamid', examid)
+      url = hostName + '/record/get/' + id + "/" + page + "/10/" + examid;
     } else if (etype == "getWxUserTopics") {
       url = hostName + '/topic/getMine/' + id + "/" + page;
+    }else if(etype=="getWrongRecord"){
+      url = hostName + '/userquestion/get/' + id + '/0/' + page + "/10"
     }
 
     wx.request({
@@ -100,7 +103,7 @@ var funcs = {
         })
       },
       fail: function (err) {
-        console.error("获取用户话题列表失败");
+        console.error("获取数据列表失败");
       }
     });
 
@@ -133,16 +136,22 @@ var funcs = {
   },
   //根据examid拉取试题内容
   getQuestions: function (id) {
+    wx.showToast({
+      title: "loading",
+      icon: 'loading',
+      duration: 1000
+    });
     var that = this;
     wx.request({
-      url: hostName + '/question/get/' + id,
+      url: hostName + '/question/get/' + id+'/'+wx.getStorageSync('userInfo').id,
       success: function (res) {
         var data = res.data.detail;
-        //console.info('ques', data)
-        //data.create_time = util.formatTime(new Date(data.create_time));
-        // if (typeof data.content == "string") {
-        //   data.content = html2json(convert(data.content));
-        // }
+        for(var i=0;i<data.length;i++){
+          var img=data[i].img
+          if(img){
+            data[i].img=img.split(";")
+          }
+        }
         that.setData({
           Questions: data
         });
@@ -152,8 +161,67 @@ var funcs = {
         console.error("获取试题失败");
       }
     });
-  }
+  },
+  addQuestionRecord(quesId, type, userId,examId) {
+    wx.request({
+      url: app.globalData.domain + '/userquestion/add',
+      data:
+      {
+        userId: userId,
+        type: type,
+        questionId: quesId,
+        examId: examId
+      },
+      method: 'POST'
+    });
+  },
+  //根据id拉取试题内容
+  getQuestion: function (id) {
+    var that = this;
+    wx.request({
+      url: hostName + '/question/getById/' + id,
+      success: function (res) {
+        var data = res.data.detail;
+        var img = data.img
+        if (img) {
+          data.img = img.split(";")
+        }
+        console.info('question', data)
+        data.create_time = util.formatTime(new Date(data.create_time));
+        // if (typeof data.content == "string") {
+        //   data.content = html2json(convert(data.title));
+        // }
 
+        that.setData({
+          question: data,
+          //author: author,
+          title: data.title
+        })
+      },
+      fail: function (err) {
+        console.error("获取试题失败");
+      },
+      complete: function (res) {
+        wx.stopPullDownRefresh();
+      }
+    });
+  },
+  //获取试卷
+  getExams: function () {
+    var that = this;
+    wx.request({
+      url: hostName + '/exam/get/' + wx.getStorageSync('userInfo').id,
+      success: function (res) {
+        var data = res.data.detail;
+        that.setData({
+          exams: data,
+        })
+      },
+      fail: function (err) {
+        console.error("获取试卷失败，网络错误");
+      }
+    });
+  }
 }
 
 

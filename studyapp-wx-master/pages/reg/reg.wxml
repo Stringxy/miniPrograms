@@ -3,7 +3,7 @@
   <view class="form">
     <input type="text" value="{{username}}" bindblur="bindUserNameBlur" placeholder="请输入用户名" class="form-input" />
     <input type="password" value="{{pwd}}" bindblur="bindPwdBlur" placeholder="请输入密码" class="form-input" />
-    <button type="primary" class="form-input" bindtap="bindUserTap">立即绑定</button>
+    <button type="primary" class="form-input" bindtap="bindUserTap">绑定登陆</button>
     <button type="default" class="form-input" bindtap="bindRegTap">注册新账号</button>
   </view>
 </view>
@@ -13,7 +13,7 @@
   <view class="form">
     <input type="text" value="{{username}}" bindblur="bindUserNameBlur" placeholder="请输入用户名" class="form-input" />
     <input type="password" value="{{pwd}}" bindblur="bindPwdBlur" placeholder="请输入密码" class="form-input" />
-    <input type="text" value="{{email}}" bindblur="bindEmailBlur" placeholder="请输入邮箱（用于找回密码）" class="form-input" />
+    <!-- <input type="text" value="{{email}}" bindblur="bindEmailBlur" placeholder="请输入邮箱（用于找回密码）" class="form-input" /> -->
     <button type="primary" class="form-input" bindtap="bindRegNewTap">注册账号</button>
     <button type="default" class="form-input" bindtap="bindLoginTap">已经有账号？</button>
   </view>

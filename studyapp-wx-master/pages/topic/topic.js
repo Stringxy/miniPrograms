@@ -48,17 +48,32 @@ Page({
   confirm: function () {
     var that = this;
     var userInfo = wx.getStorageSync('userInfo');
+    if(!userInfo){
+      console.info('tijiaopinglun', userInfo)
+      userInfo=wx.getStorageSync('weixinUser');
+    }
+    console.info('tijiaopinglun',userInfo)
     var content = that.data.newComment;
+    if(content.length<5){
+      wx.showModal({
+        title: "提示",
+        content: "评论至少大于5个字，拒绝灌水～",
+        showCancel: false
+      })
+      return;
+    }
+    var topicid = that.data.topic.topicid
     wx.request({
       url: app.globalData.domain + '/comment/add',
       data:
       {
         title: that.data.title,
         content: content,
-        topicid: that.data.topic.topicid,
-        openid: userInfo.openid,
+        topicid: topicid,
+        openid: wx.getStorageSync('openid'),
         nick_name: userInfo.nickName,
-        avatar: userInfo.avatarUrl
+        avatar: userInfo.avatarUrl,
+        userid: userInfo.id
       },
       method: 'POST',
       success: function (data) {
@@ -70,10 +85,11 @@ Page({
             icon: 'success',
             success: function (res) {
               setTimeout(function () {
-                wx.reLaunch({
-                  url: "../index/index"
-                });
+                func.getTopic.call(that, topicid);
               }, 1000);
+              that.setData({
+                hidden: true
+              })
             }
           });
 
@@ -89,6 +105,11 @@ Page({
   },
   onLoad: function (options) {
     var that = this;
+    wx.showToast({
+      title: "loading",
+      icon: 'loading',
+      duration: 1200
+    });
     //调用应用实例的方法获取全局数据
     app.getUserInfo(function (userInfo) {
       //更新数据
@@ -102,7 +123,7 @@ Page({
   },
   onShareAppMessage: function () {
     return {
-      title: '我的日报',
+      title: '我在软考助手当学霸',
       desc: '好好学习，天天向上!'
     }
   }

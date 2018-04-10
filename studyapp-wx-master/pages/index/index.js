@@ -54,27 +54,32 @@ Page({
   //滚动加载列表
   bindScrollToLower: function(){
      console.info("bindScrollToLower")
-    // if(this.data.page < 3){
-    //   wx.showToast({
-    //     title: '正在加载',
-    //     icon: 'loading'
-    //   });
-    //   var cate;
-    //   for(var i = 0; i < this.data.cates.length; i++){
-    //     if(this.data.cates[i].selected == true){
-    //       cate = this.data.cates[i];
-    //     }
-    //   }
-      
-    //    func.getTopics.call(this, cate.id, this.data.page+1);
-    // }else{
-    //   this.setData({
-    //     hasMore: false
-    //   })
-    // }
+    if(this.data.page < 3){
+      wx.showToast({
+        title: '正在加载',
+        icon: 'loading'
+      });
+      var cate;
+      for(var i = 0; i < this.data.cates.length; i++){
+        if(this.data.cates[i].selected == true){
+          cate = this.data.cates[i];
+        }
+      }
+       func.getTopics.call(this, cate.id, this.data.page+1);
+    }else{
+      this.setData({
+        hasMore: false
+      })
+    }
     
   },
   bindScrollToUpper: function(){
+    console.info("bindScrollToUpper")
+    var that = this
+    //更新数据
+    that.setData({
+      topics: []
+    })
     wx.showToast({
       title: '正在刷新',
       icon: 'loading'

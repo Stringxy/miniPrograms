@@ -5,16 +5,13 @@
     <view class="user-name">{{userInfo.nickName}}</view>
   </view> -->
   <view class="user-body">
-    <view class="user-box">
-      <image class="user-box-img" src="/images/user.png"></image>
-      <view class="user-box-name" bindtap="bindSoftwareDesignEngineer">软件设计师真题测试</view>
-      <view class="user-box-num" hidden>10</view>
-    </view>
-
+    <block wx:for="{{exams}}" wx:key="_id">
+      <view class="user-box" bindtap="bindSoftwareDesignEngineer" data-id="{{item.id}}">
+        <image class="user-box-img" src="/resource/pen.png"></image>
+        <view class="user-box-name">{{item.name}}</view>
+        <view class="user-box-num">{{item.rightNum}}/{{item.total}}</view>
+      </view>
+    </block>
   </view>
 
 </view>
-
-
-
-

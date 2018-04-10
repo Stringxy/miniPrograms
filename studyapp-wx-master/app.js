@@ -17,41 +17,45 @@ App({
   },
   getUserInfo: function (cb) {
     var that = this
+    //console.info('this.globalData.userInfo', this.globalData.userInfo)
     if (this.globalData.userInfo) {
+      //console.info('this.globalData.userInfo', this.globalData.userInfo)
       typeof cb == "function" && cb(this.globalData.userInfo)
     } else {
       //调用登录接口
       wx.login({
         success: function (res) {
+          console.info(res, 'resresres');
+          if (res.code) {
+            //发起网络请求
+            wx.request({
+              url: that.globalData.domain + '/user/validate/' + res.code,
+              method: 'GET',
+              success: function (res) {
+                if (res.data.result == 200) {
+                  if (res.data.detail.id > 0) {
+                    that.globalData.userInfo = res.data.detail;
+                    wx.setStorageSync('isLogin', true);
+                    wx.setStorageSync('userInfo', res.data.detail)
+                    console.info('setuserInfouserInfouserInfo', wx.getStorageSync('userInfo'));
+                    typeof cb == "function" && cb(that.globalData.userInfo)
+                  } else {
+                    var openid = res.data.detail.openid;
+                    console.info('setopenid', openid)
+                    wx.setStorageSync('isLogin', false);
+                    wx.setStorageSync('openid', openid)
+                  }
+                }
+
+              }
+            })
+          } else {
+            console.log('获取用户登录态失败！' + res.errMsg)
+          }
           wx.getUserInfo({
             success: function (info) {
-              console.info(res, 'resresres');
-              var edata = info.userInfo;
-              edata.code = res.code;
-              console.info(edata, 'edataedataedataedata');
-              wx.setStorageSync('weixinUser', edata)
-              if (res.code) {
-                //发起网络请求
-                wx.request({
-                  url: that.globalData.domain + '/user/validate/' + res.code,
-                  method: 'GET',
-                  success: function (res) {
-                    if (res.data.result == 200) {
-                      if(res.data.detail.id>0){
-                      that.globalData.userInfo = res.data.detail;
-                      wx.setStorageSync('isLogin', true);
-                      wx.setStorageSync('userInfo', res.data.detail)
-                      typeof cb == "function" && cb(that.globalData.userInfo)
-                      }else{
-                        wx.setStorageSync('openid', res.data.detail.openid)
-                      }
-                    }
-
-                  }
-                })
-              } else {
-                console.log('获取用户登录态失败！' + res.errMsg)
-              }
+              console.info(info, 'infoinfoinfo');
+              wx.setStorageSync('weixinUser', info.userInfo)
             }
           })
         }
@@ -72,37 +76,37 @@ App({
       },
       {
         id: "10",
-        name: "JAVA",
+        name: "软考",
         selected: false
       },
       {
         id: "11",
-        name: "JavaScript",
+        name: "Web开发",
         selected: false
       },
       {
         id: "12",
-        name: "Python",
-        selected: false
-      },
-      {
-        id: "13",
-        name: "Node.js",
-        selected: false
-      },
-      {
-        id: "14",
         name: "微信开发",
         selected: false
       },
       {
-        id: "15",
+        id: "13",
+        name: "游戏开发",
+        selected: false
+      },
+      {
+        id: "14",
         name: "招聘",
         selected: false
       },
       {
+        id: "15",
+        name: "AI",
+        selected: false
+      },
+      {
         id: "16",
-        name: "问答",
+        name: "bug专区",
         selected: false
       }
     ]
